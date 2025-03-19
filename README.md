@@ -1,2 +1,2 @@
 # Projeto_de_IC
-Resumo das atividades da iniciação científica
+Resumo das atividades da iniciação científica.
