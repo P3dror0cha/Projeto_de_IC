@@ -1,0 +1,172 @@
+The downloadable files for each data set
+Uploaded File(s) DNA (4465825.3.25422.fna)
+
+Uploaded nucleotide sequence data in FASTA format. Preprocessing
+
+Depending on the options chosen, the preprocessing step filters sequences based on length, number of ambiguous bases and quality values if available.
+
+passed, DNA (4465825.3.100.preprocess.passed.fna)
+
+A FASTA formatted file containing the sequences which were accepted and will be passed on to the next stage of the analysis pipeline.
+
+removed, DNA (4465825.3.100.preprocess.removed.fna)
+
+A FASTA formatted file containing the sequences which were rejected and will not be passed on to the next stage of the analysis pipeline. Dereplication
+
+The optional dereplication step removes redundant “technical replicate” sequences from the metagenomic sample. Technical replicates are identified by binning reads with identical first 50 base-pairs. One copy of each 50-base-pair identical bin is retained.
+
+passed, DNA (4465825.3.150.dereplication.passed.fna)
+
+A FASTA formatted file containing one sequence from each bin which will be passed on to the next stage of the analysis pipeline.
+
+removed, DNA (4465825.3.150.dereplication.removed.fna)
+
+A FASTA formatted file containing the sequences which were identified as technical replicates and will not be passed on to the next stage of the analysis pipeline. Screening
+
+The optional screening step screens reads against model organisms using bowtie to remove reads which are similar to the genome of the selected species.
+
+passed, DNA (4465825.3.299.screen.passed.fna)
+
+A FASTA formatted file containing the reads which which had no similarity to the selected genome and will be passed on to the next stage of the analysis pipeline. Prediction of protein coding sequences
+
+Coding regions within the sequences are predicted using FragGeneScan, an ab-initio prokaryotic gene calling algorithm. Using a hidden Markov model for coding regions and non-coding regions, this step identifies the most likely reading frame and translates nucleotide sequences into amino acids sequences. The predicted coding regions, possibly more than one per fragment, are called features.
+
+coding, Protein (4465825.3.350.genecalling.coding.faa)
+
+A amino-acid sequence FASTA formatted file containing the translations of the predicted coding regions.
+
+coding, DNA (4465825.3.350.genecalling.coding.fna)
+
+A nucleotide sequence FASTA formatted file containing the predicted coding regions. RNA Clustering
+
+Sequences from step 2 (before dereplication) are pre-screened for at least 60% identity to ribosomal sequences and then clustered at 97% identity using UCLUST. These clusters are checked for similarity against the ribosomal RNA databases (Greengenes(DeSantis et al. 2006), LSU and SSU from (Pruesse et al. 2007), and RDP(Cole et al. 2003)).
+
+rna97, DNA (4465825.3.440.cluster.rna97.fna)
+
+A FASTA formatted file containing sequences that have at least 60% identity to ribosomal sequences and are checked for RNA similarity.
+
+rna97, Cluster (4465825.3.440.cluster.rna97.mapping)
+
+A tab-delimited file that identifies the sequence clusters and the sequences that comprise them.
+
+The columns making up each line in this file are:
+
+Cluster ID, e.g. rna97_998
+
+Representative read ID, e.g. 11909294
+
+List of IDs for other reads in the cluster, e.g. 11898451,11944918
+
+List of percentage identities to the representative read sequence, e.g. 97.5%,100.0%
+
+RNA similarities
+
+The two files labelled “expand” are comma- and semicolon- delimited files that provide the mappings from md5s to function and md5s to taxonomy:
+
+annotated, Sims (4465825.3.450.rna.expand.lca)
+
+annotated, Sims (4465825.3.450.rna.expand.rna)
+
+Packaged results of the blat search against all the DNA databases with MD5 value of the database sequence hit followed by sequence or cluster ID, similarity information, annotation, organism, database name.
+
+raw, Sims (4465825.3.450.rna.sims)
+
+This is the similarity output from BLAT. This includes the identifier for the query which is either the FASTA id or the cluster ID, and the internal identifier for the sequence that it hits.
+
+The fields are in BLAST m8 format:
+
+Query id (either fasta ID or cluster ID), e.g. 11847922
+
+Hit id, e.g. lcl|501336051b4d5d412fb84afe8b7fdd87
+
+percentage identity, e.g. 100.00
+
+alignment length, e.g. 107
+
+number of mismatches, e.g. 0
+
+number of gap openings, e.g. 0
+
+q.start, e.g. 1
+
+q.end, e.g. 107
+
+s.start, e.g. 1262
+
+s.end, e.g. 1156
+
+e-value, e.g. 1.7e-54
+
+score in bits, e.g. 210.0
+
+filtered, Sims (15:04 4465825.3.450.rna.sims.filter)
+
+This is a filtered version of the raw Sims file above that removes all but the best hit for each data source. Gene Clustering
+
+Protein coding sequences are clustered at 80% identity with UCLUST. This process does not remove any sequences but instead makes the similarity search step easier. Following the search, the original reads are loaded into MG-RAST for retrieval on-demand.
+
+aa90, Protein (4465825.3.550.cluster.aa90.faa)
+
+An amino acid sequence FASTA formatted file containing the translations of one sequence from each cluster (by cluster ids starting with aa90) and all the unclustered (singleton) sequences with the original sequence ID.
+
+aa90, Cluster (4465825.3.550.cluster.aa90.mapping)
+
+A tab-separated file in which each line describes a single cluster.
+
+The fields are:
+
+Cluster ID, e.g. aa90_3270
+
+protein coding sequence ID including hit location and strand, e.g. 11954908_1_121_+
+
+additional sequence ids including hit location and strand, e.g. 11898451_1_119_+,11944918_19_121_+
+
+sequence % identities, e.g. 94.9%,97.0%
+
+Protein similarities
+
+annotated, Sims (4465825.3.650.superblat.expand.lca)
+
+The expand.lca file decodes the MD5 to the taxonomic classification it is annotated with.
+
+The format is:
+
+md5(s), e.g. cf036dfa9cdde3a8a4c09d7fabfd9ba5;1e538305b8319dab322b8f28da82e0a1
+
+feature id (for singletons) or cluster id of hit including hit location and strand, e.g. 11857921_1_101-
+
+alignment %, e.g. 70.97;70.97
+
+alignment length, e.g. 31;31
+
+E-value, e.g. 7.5e-05;7.5e-05
+
+Taxonomic string, e.g. Bacteria;Actinobacteria;Actinobacteria (class);Coriobacteriales;Coriobacteriaceae;Slackia;Slackia exigua;-
+
+annotated, Sims (4465825.3.650.superblat.expand.protein)
+
+Packaged results of the blat search against all the protein databases with MD5 value of the database sequence hit followed by sequence or cluster ID, similarity information, functional annotation, organism, database name.
+
+Format is:
+
+md5 (identifier for the database hit), e.g. 88848aa7224ca2f3ac117e7953edd2d9
+
+feature id (for singletons) or cluster ID for the query, e.g. aa90_22837
+
+alignment % identity, e.g. 76.47
+
+alignment length, e.g. 34
+
+E-value, e.g. 1.3e-06
+
+protein functional label, e.g. SsrA-binding protein
+
+Species name associated with best protein hit, e.g. Prevotella bergensis DSM 17361 RefSeq 585502
+
+raw, Sims (4465825.3.650.superblat.sims)
+
+Blat output with sequence or cluster ID, md5 value for the sequence in the database and similarity information.
+
+filtered, Sims (4465825.3.650.superblat.sims.filter)
+
+Blat output filtered to take only the best hit from each data source.
