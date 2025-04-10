@@ -4,7 +4,11 @@ Imagem da pipeline do MG-RAST:
 
 Resumo das etapas realizadas:
 **Pré-professamento:** Regiões de baixa qualidade são retiradas usando o programa SolexaQA (Cox, Peterson, and Biggs 2010). Reads maiores/menores que dois desvios padrões da média também são retirados.
+
 **De-replication:** Retirada de reads duplicadas do conjunto de dados.
+
 **DRISEE:** Montagem do DRISEE Score que quantifica as amostras duplicadas.
+
 **Screening:** Retira contaminação de outras espécies utilizando o programa Bowtie.
+
 **Gene Calling:** 
